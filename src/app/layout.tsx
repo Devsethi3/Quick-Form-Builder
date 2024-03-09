@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { ClerkProvider } from '@clerk/nextjs'
 import { Toaster } from "@/components/ui/toaster";
+import { DesignerContextProvider } from "@/context/DesignerContext";
 
 const outfit = Poppins({ subsets: ["latin"], weight: ["100", "200", "300", "400", "500", "600", "700", "800",] });
 
@@ -21,15 +22,17 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={outfit.className}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-            <Toaster />
-          </ThemeProvider>
+          <DesignerContextProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+              <Toaster />
+            </ThemeProvider>
+          </DesignerContextProvider>
         </body>
       </html >
     </ClerkProvider>

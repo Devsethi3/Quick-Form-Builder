@@ -24,7 +24,7 @@ export const TextFieldFormElement: FormElement = {
         label: "Text Field"
     },
 
-    designerComponent: () => <div>Desinger Component</div>,
+    designerComponent: () => <div className="text-white text-sm">Desinger Component</div>,
     formComponent: () => <div>Form Component</div>,
     propertiesComponent: () => <div>Properites Component</div>
 }

@@ -6,6 +6,7 @@ import SaveFormBtn from "./SaveFormBtn"
 import PublishFormBtn from "./PublishFormBtn"
 import Designer from "./Designer"
 import { DndContext } from "@dnd-kit/core"
+import DragOverlayWrapper from "./DragOverlayWrapper"
 
 const FormBuilder = ({ form }: { form: Form }) => {
 
@@ -31,6 +32,7 @@ const FormBuilder = ({ form }: { form: Form }) => {
                     <Designer />
                 </div>
             </main>
+            <DragOverlayWrapper />
         </DndContext>
     )
 }
