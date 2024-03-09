@@ -5,11 +5,12 @@ import PreviewDialogBtn from "./PreviewDialogBtn"
 import SaveFormBtn from "./SaveFormBtn"
 import PublishFormBtn from "./PublishFormBtn"
 import Designer from "./Designer"
+import { DndContext } from "@dnd-kit/core"
 
 const FormBuilder = ({ form }: { form: Form }) => {
 
     return (
-        <>
+        <DndContext>
             <main className="flex flex-col min-h-screen w-full">
                 <nav className="flex h-[4rem] px-7 items-center justify-between border-b-2 gap-3">
                     <h2 className="truncate font-medium">
@@ -30,7 +31,7 @@ const FormBuilder = ({ form }: { form: Form }) => {
                     <Designer />
                 </div>
             </main>
-        </>
+        </DndContext>
     )
 }
 
