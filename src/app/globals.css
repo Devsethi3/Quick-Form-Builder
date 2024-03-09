@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+::-webkit-scrollbar{
+  display: none;
+}
+
 .container {
   max-width: 1500px;
   margin: 1rem auto;
