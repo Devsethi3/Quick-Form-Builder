@@ -1,11 +1,14 @@
 "use client"
 
 import { FormElementInstance } from "@/components/FormElements"
-import { ReactNode, createContext, useState } from "react";
+import { Dispatch, ReactNode, SetStateAction, createContext, useState } from "react";
 
 type DesignerContextType = {
     elements: FormElementInstance[];
     addElement: (index: number, element: FormElementInstance) => void;
+    removeElement: (id: string) => void;
+    selectedElement: FormElementInstance | null;
+    setSelectedElement: Dispatch<SetStateAction<FormElementInstance | null>>;
 }
 
 export const DesignerContext = createContext<DesignerContextType | null>(null)
@@ -13,6 +16,7 @@ export const DesignerContext = createContext<DesignerContextType | null>(null)
 export const DesignerContextProvider = ({ children }: { children: ReactNode }) => {
 
     const [elements, setElements] = useState<FormElementInstance[]>([])
+    const [selectedElement, setSelectedElement] = useState<FormElementInstance | null>(null)
 
     const addElement = (index: number, element: FormElementInstance) => {
         setElements((prev) => {
@@ -22,7 +26,11 @@ export const DesignerContextProvider = ({ children }: { children: ReactNode }) =
         })
     }
 
+    const removeElement = (id: string) => {
+        setElements((prev) => prev.filter((element) => element.id !== id))
+    };
+
     return (
-        <DesignerContext.Provider value={{elements,addElement}}>{children}</DesignerContext.Provider>
+        <DesignerContext.Provider value={{ elements, addElement, removeElement, selectedElement, setSelectedElement }}>{children}</DesignerContext.Provider>
     )
 }
