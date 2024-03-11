@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { ClerkProvider } from '@clerk/nextjs'
 import { Toaster } from "@/components/ui/toaster";
-import { DesignerContextProvider } from "@/context/DesignerContext";
-
-const outfit = Poppins({ subsets: ["latin"], weight: ["100", "200", "300", "400", "500", "600", "700", "800",] });
+import DesignerContextProvider from "@/context/DesignerContex";
+const outfit = Montserrat({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700", "800",] });
+import NextTopLoader from 'nextjs-toploader'
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,6 +22,9 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={outfit.className}>
+          <NextTopLoader color="#fff"
+            showSpinner={false}
+            easing="ease" />
           <DesignerContextProvider>
             <ThemeProvider
               attribute="class"

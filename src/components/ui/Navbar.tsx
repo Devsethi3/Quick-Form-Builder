@@ -16,6 +16,19 @@ const Navbar = () => {
                 <Link href="/">
                     <h2 className="font-bold text-2xl">PAGEFORM</h2>
                 </Link>
+                <div>
+                    <ul className="flex items-center gap-16">
+                        <li className="font-medium text-primary/70 hover:text-primary">
+                            <Link href="/">Home</Link>
+                        </li>
+                        <li className="font-medium text-primary/70 hover:text-primary">
+                            <Link href="/dashboard">Dashboard</Link>
+                        </li>
+                        <li className="font-medium text-primary/70 hover:text-primary">
+                            <Link href="/">Pricing</Link>
+                        </li>
+                    </ul>
+                </div>
                 <div className="flex items-center gap-3">
                     <ThemeSwitcher />
                     {user ? (
