@@ -143,44 +143,44 @@ export async function GetFormContentByUrl(formUrl: string) {
         increment: 1,
       },
     },
-    where:{
-      shareUrl: formUrl
-    }
+    where: {
+      shareUrl: formUrl,
+    },
   });
 }
 
-// export async function SubmitForm(formUrl: string, content: string) {
-//   return await prisma.form.update({
-//     data: {
-//       submissions: {
-//         increment: 1,
-//       },
-//       FormSubmissions: {
-//         create: {
-//           content,
-//         },
-//       },
-//     },
-//     where: {
-//       shareURL: formUrl,
-//       published: true,
-//     },
-//   });
-// }
+export async function SubmitForm(formUrl: string, content: string) {
+  return await prisma.form.update({
+    data: {
+      submissions: {
+        increment: 1,
+      },
+      FormSubmission: {
+        create: {
+          content,
+        },
+      },
+    },
+    where: {
+      shareUrl: formUrl,
+      published: true,
+    },
+  });
+}
 
-// export async function GetFormWithSubmissions(id: number) {
-//   const user = await currentUser();
-//   if (!user) {
-//     throw new UserNotFoundErr();
-//   }
+export async function GetFormWithSubmissions(id: number) {
+  const user = await currentUser();
+  if (!user) {
+    throw new UserNotFoundErr();
+  }
 
-//   return await prisma.form.findUnique({
-//     where: {
-//       userId: user.id,
-//       id,
-//     },
-//     include: {
-//       FormSubmissions: true,
-//     },
-//   });
-// }
+  return await prisma.form.findUnique({
+    where: {
+      userId: user.id,
+      id,
+    },
+    include: {
+      FormSubmission: true,
+    },
+  });
+}

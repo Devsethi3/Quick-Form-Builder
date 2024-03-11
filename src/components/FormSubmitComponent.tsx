@@ -6,7 +6,7 @@ import { Button } from "./ui/button";
 import { HiCursorClick } from "react-icons/hi";
 import { toast } from "./ui/use-toast";
 import { ImSpinner2 } from "react-icons/im";
-// import { SubmitForm } from "@/actions/form";
+import { SubmitForm } from "../../actions/form";
 
 function FormSubmitComponent({ formUrl, content }: { content: FormElementInstance[]; formUrl: string }) {
     const formValues = useRef<{ [key: string]: string }>({});
@@ -50,17 +50,17 @@ function FormSubmitComponent({ formUrl, content }: { content: FormElementInstanc
             return;
         }
 
-        // try {
-        //     const jsonContent = JSON.stringify(formValues.current);
-        //     await SubmitForm(formUrl, jsonContent);
-        //     setSubmitted(true);
-        // } catch (error) {
-        //     toast({
-        //         title: "Error",
-        //         description: "Something went wrong",
-        //         variant: "destructive",
-        //     });
-        // }
+        try {
+            const jsonContent = JSON.stringify(formValues.current);
+            await SubmitForm(formUrl, jsonContent);
+            setSubmitted(true);
+        } catch (error) {
+            toast({
+                title: "Error",
+                description: "Something went wrong!",
+                variant: "destructive",
+            });
+        }
     };
 
     if (submitted) {

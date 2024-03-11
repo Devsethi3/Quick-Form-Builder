@@ -49,7 +49,7 @@ export const TextFieldFormElement: FormElement = {
 
     validate: (formElement: FormElementInstance, currentValue: string): boolean => {
         const element = formElement as CustomInstance;
-        
+
         if (element.extraAttributes.required) {
             return currentValue.length > 0;
         }
@@ -166,7 +166,7 @@ function PropertiesComponent({ elementInstance }: { elementInstance: FormElement
                         <FormLabel>Label</FormLabel>
                         <FormControl>
                             <Input {...field} onKeyDown={(e) => {
-                                if (e.key === "Enter") e.currentTarget.blur
+                                if (e.key === "Enter") e.currentTarget.blur();
                             }} />
                         </FormControl>
                         <FormDescription>
