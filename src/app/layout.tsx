@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
+import { Mukta } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { ClerkProvider } from '@clerk/nextjs'
 import { Toaster } from "@/components/ui/toaster";
 import DesignerContextProvider from "@/context/DesignerContex";
-const outfit = Montserrat({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700", "800",] });
+const outfit = Mukta({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700", "800",] });
 import NextTopLoader from 'nextjs-toploader'
 
 export const metadata: Metadata = {
