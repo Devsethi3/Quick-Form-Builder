@@ -14,17 +14,17 @@ const Navbar = () => {
         <>
             <div className="flex items-center justify-between border-b px-9 py-4">
                 <Link href="/">
-                    <h2 className="font-bold text-2xl">PAGEFORM</h2>
+                    <h2 className="font-bold text-2xl">QuickForm</h2>
                 </Link>
                 <div>
                     <ul className="flex items-center gap-16">
-                        <li className="font-medium text-primary/70 hover:text-primary">
+                        <li className="font-medium text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white">
                             <Link href="/">Home</Link>
                         </li>
-                        <li className="font-medium text-primary/70 hover:text-primary">
+                        <li className="font-medium text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white">
                             <Link href="/dashboard">Dashboard</Link>
                         </li>
-                        <li className="font-medium text-primary/70 hover:text-primary">
+                        <li className="font-medium text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white">
                             <Link href="/">Pricing</Link>
                         </li>
                     </ul>
@@ -35,8 +35,8 @@ const Navbar = () => {
                         <UserButton />
                     ) : (
                         <>
-                            <Button onClick={() => router.push("/sign-up")}>Login</Button>
-                            <Button variant="secondary" onClick={() => router.push("/sign-in")}>Register</Button>
+                            <Button onClick={() => router.push("/sign-in")}>Login</Button>
+                            <Button variant="secondary" onClick={() => router.push("/sign-up")}>Register</Button>
                         </>
                     )}
                 </div>

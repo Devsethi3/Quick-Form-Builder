@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Mukta } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/providers/ThemeProvider";
-import { ClerkProvider } from '@clerk/nextjs'
-import { Toaster } from "@/components/ui/toaster";
-import DesignerContextProvider from "@/context/DesignerContex";
-const outfit = Mukta({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700", "800",] });
+const outfit = Poppins({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700", "800",] });
 import NextTopLoader from 'nextjs-toploader'
+import { ClerkProvider } from "@clerk/nextjs";
+import DesignerContextProvider from "@/context/DesignerContext";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,22 +22,15 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={outfit.className}>
-          <NextTopLoader color="#fff"
-            showSpinner={false}
-            easing="ease" />
+          <NextTopLoader color="#884DEE" />
           <DesignerContextProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="dark"
-              enableSystem
-              disableTransitionOnChange
-            >
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
               {children}
               <Toaster />
             </ThemeProvider>
           </DesignerContextProvider>
         </body>
-      </html >
+      </html>
     </ClerkProvider>
   );
 }

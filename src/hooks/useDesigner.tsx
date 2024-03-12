@@ -1,6 +1,6 @@
 "use client"
 
-import { DesignerContext } from "@/context/DesignerContex"
+import { DesignerContext } from "@/context/DesignerContext"
 import { useContext } from "react"
 
 const useDesigner = () => {

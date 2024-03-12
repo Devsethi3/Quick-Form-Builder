@@ -69,6 +69,7 @@ function Designer() {
                 return;
             }
 
+            // Third scenario
             const isDraggingDesignerElement = active.data?.current?.isDesignerElement;
 
             const draggingDesignerElementOverAnotherDesignerElement =
@@ -124,7 +125,7 @@ function Designer() {
                         </div>
                     )}
                     {elements.length > 0 && (
-                        <div className="flex flex-col  w-full gap-2 p-4">
+                        <div className="flex flex-col w-full gap-2 p-4">
                             {elements.map((element) => (
                                 <DesignerElementWrapper key={element.id} element={element} />
                             ))}
@@ -176,7 +177,7 @@ function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
             ref={draggable.setNodeRef}
             {...draggable.listeners}
             {...draggable.attributes}
-            className="relative h-[120px] flex flex-col text-foreground hover:cursor-pointer rounded-md ring-1 ring-accent ring-inset"
+            className="relative min-h-[100px] flex flex-col text-foreground hover:cursor-pointer rounded-md ring-1 ring-accent ring-inset"
             onMouseEnter={() => {
                 setMouseIsOver(true);
             }}
@@ -212,7 +213,7 @@ function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
             {topHalf.isOver && <div className="absolute top-0 w-full rounded-md h-[7px] bg-primary rounded-b-none" />}
             <div
                 className={cn(
-                    "flex w-full h-[120px] items-center rounded-md bg-accent/40 px-4 py-2 pointer-events-none opacity-100",
+                    "flex w-full min-h-[100px] items-center rounded-md bg-accent/40 px-4 py-2 pointer-events-none opacity-100",
                     mouseIsOver && "opacity-30",
                 )}
             >
