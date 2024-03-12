@@ -87,7 +87,6 @@ async function FormDetailPage({
                 />
             </div>
 
-
             <div className="container pt-10">
                 <SubmissionsTable id={form.id} />
             </div>

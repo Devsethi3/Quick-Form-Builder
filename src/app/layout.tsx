@@ -22,7 +22,10 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={outfit.className}>
-          <NextTopLoader color="#884DEE" />
+          <NextTopLoader color="#884DEE" crawlSpeed={200}
+            height={4}
+            crawl={true}
+            easing="ease" />
           <DesignerContextProvider>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
               {children}
