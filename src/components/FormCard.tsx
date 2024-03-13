@@ -66,7 +66,7 @@ const FormCard = ({ form }: { form: Form }) => {
 
 
     return (
-        <Card>
+        <Card className="min-h-[200px]">
             <CardHeader>
                 <CardTitle className="flex items-center gap-2 justify-between relative">
                     <h2 className="font-bold text-[1.4rem]">{form.name}</h2>

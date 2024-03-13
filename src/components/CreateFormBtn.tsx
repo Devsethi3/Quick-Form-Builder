@@ -50,7 +50,7 @@ function CreateFormBtn() {
             <DialogTrigger asChild>
                 <Button
                     variant={"outline"}
-                    className="group border border-primary/20 h-[190px] items-center justify-center flex flex-col hover:border-primary hover:cursor-pointer border-dashed gap-4"
+                    className="group border border-primary/20 h-[210px] items-center justify-center flex flex-col hover:border-primary hover:cursor-pointer border-dashed gap-4"
                 >
                     <BsFileEarmarkPlus className="h-8 w-8 text-muted-foreground group-hover:text-primary" />
                     <p className="font-bold text-xl text-muted-foreground group-hover:text-primary">Create new form</p>
@@ -83,7 +83,7 @@ function CreateFormBtn() {
                                 <FormItem>
                                     <FormLabel>Description</FormLabel>
                                     <FormControl>
-                                        <Textarea rows={5} {...field} />
+                                        <Textarea rows={3} {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
