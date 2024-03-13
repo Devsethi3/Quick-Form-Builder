@@ -17,9 +17,10 @@ const Navbar = () => {
             <header className="border-b">
                 <div className="container">
                     <div className="flex h-12 items-center justify-between">
-                        <div>
-                            <h1 className="text-2xl font-bold">QuickForm</h1>
-                        </div>
+                        <Link href="/" className="flex items-center gap-3">
+                            <Image src="/logo.svg" width={45} height={45} alt="logo" />
+                            <h1 className="text-3xl font-bold">QuickForm</h1>
+                        </Link>
 
                         <div className="hidden md:block">
                             <nav aria-label="Global">
