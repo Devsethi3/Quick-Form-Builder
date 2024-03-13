@@ -18,6 +18,7 @@ function FormLinkShare({ shareUrl }: { shareUrl: string }) {
   }
 
   const shareLink = `${window.location.origin}/submit/${shareUrl}`;
+  
   return (
     <div className="flex flex-grow gap-4 items-center">
       <Input value={shareLink} readOnly />

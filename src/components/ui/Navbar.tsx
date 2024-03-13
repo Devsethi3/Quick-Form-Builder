@@ -4,6 +4,7 @@ import ThemeSwitcher from "./ThemeSwitcher"
 import { Button } from "./button"
 import { useRouter } from "next/navigation"
 import { UserButton, useUser } from "@clerk/nextjs"
+import Image from "next/image"
 
 const Navbar = () => {
 
@@ -13,8 +14,9 @@ const Navbar = () => {
     return (
         <>
             <div className="flex items-center justify-between border-b px-9 py-4">
-                <Link href="/">
-                    <h2 className="font-bold text-2xl">QuickForm</h2>
+                <Link href="/" className="flex items-center gap-2">
+                    <Image src="/logo.svg" width="42" height="42" alt="logo" />
+                    <h2 className="font-bold text-[1.6rem]">QuickForm</h2>
                 </Link>
                 <div>
                     <ul className="flex items-center gap-16">

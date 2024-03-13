@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Outfit } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/providers/ThemeProvider";
-const outfit = Poppins({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700", "800",] });
+const outfit = Outfit({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700", "800",] });
 import NextTopLoader from 'nextjs-toploader'
 import { ClerkProvider } from "@clerk/nextjs";
 import DesignerContextProvider from "@/context/DesignerContext";

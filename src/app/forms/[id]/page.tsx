@@ -1,4 +1,3 @@
-import FormLinkShare from "@/components/FormLinkShare";
 import VisitBtn from "@/components/VisitBtn";
 import React, { ReactNode } from "react";
 import { LuView } from "react-icons/lu";
@@ -12,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { GetFormById, GetFormWithSubmissions } from "@/action/form";
 import { StatsCard } from "@/app/(routes)/dashboard/page";
+import ShareForm from "@/components/ShareForm";
 
 async function FormDetailPage({
     params,
@@ -46,7 +46,7 @@ async function FormDetailPage({
             </div>
             <div className="py-4 border-b border-muted">
                 <div className="container flex gap-2 items-center justify-between">
-                    <FormLinkShare shareUrl={form.shareURL} />
+                    <ShareForm shareUrl={form.shareURL} />
                 </div>
             </div>
             <div className="w-full pt-8 gap-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 container">
