@@ -5,6 +5,7 @@ import { Button } from "./button"
 import { useRouter } from "next/navigation"
 import { UserButton, useUser } from "@clerk/nextjs"
 import Image from "next/image"
+import { HiMenu } from "react-icons/hi"
 
 const Navbar = () => {
 
@@ -13,38 +14,52 @@ const Navbar = () => {
 
     return (
         <>
-            <div className="flex items-center justify-between border-b px-9 py-4">
-                <Link href="/" className="flex items-center gap-2">
-                    <Image src="/logo.svg" width="42" height="42" alt="logo" />
-                    <h2 className="font-bold text-[1.6rem]">QuickForm</h2>
-                </Link>
-                <div>
-                    <ul className="flex items-center gap-16">
-                        <li className="font-medium text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white">
-                            <Link href="/">Home</Link>
-                        </li>
-                        <li className="font-medium text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white">
-                            <Link href="/dashboard">Dashboard</Link>
-                        </li>
-                        <li className="font-medium text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white">
-                            <Link href="/">Pricing</Link>
-                        </li>
-                    </ul>
+            <header className="border-b">
+                <div className="container">
+                    <div className="flex h-12 items-center justify-between">
+                        <div>
+                            <h1 className="text-2xl font-bold">QuickForm</h1>
+                        </div>
+
+                        <div className="hidden md:block">
+                            <nav aria-label="Global">
+                                <ul className="flex items-center gap-12">
+                                    <li>
+                                        <Link href="/" className="text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white">Home</Link>
+                                    </li>
+                                    <li>
+                                        <Link href="/dashboard" className="text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white">Dashboard</Link>
+                                    </li>
+                                    <li>
+                                        <Link href="/" className="text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white">Pricing</Link>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+
+                        <div className="flex items-center gap-4">
+                            <ThemeSwitcher />
+                            {user ? (
+                                <UserButton />
+                            ) : (
+                                <>
+                                    <Button onClick={() => router.push("/sign-in")}>Login</Button>
+                                    <Button variant="secondary" onClick={() => router.push("/sign-up")}>Register</Button>
+                                </>
+                            )}
+
+                            <div className="block md:hidden">
+                                <Button variant="secondary">
+                                    <HiMenu className="text-xl" />
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div className="flex items-center gap-3">
-                    <ThemeSwitcher />
-                    {user ? (
-                        <UserButton />
-                    ) : (
-                        <>
-                            <Button onClick={() => router.push("/sign-in")}>Login</Button>
-                            <Button variant="secondary" onClick={() => router.push("/sign-up")}>Register</Button>
-                        </>
-                    )}
-                </div>
-            </div>
+            </header>
         </>
     )
 }
 
 export default Navbar
+

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Outfit } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/providers/ThemeProvider";
-const outfit = Outfit({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700", "800",] });
+const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700", "800",] });
 import NextTopLoader from 'nextjs-toploader'
 import { ClerkProvider } from "@clerk/nextjs";
 import DesignerContextProvider from "@/context/DesignerContext";
@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={outfit.className}>
+        <body className={poppins.className}>
           <NextTopLoader color="#884DEE" crawlSpeed={200}
             height={4}
             crawl={true}
