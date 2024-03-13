@@ -68,24 +68,42 @@ export async function CreateForm(data: formSchemaType) {
 
   return form.id;
 }
-
 export async function DeleteForm(formId: number) {
   const user = await currentUser();
   if (!user) {
     throw new UserNotFoundErr();
   }
 
-  const form = await prisma.form.findFirst({
+  // Check if the form exists before attempting to delete it
+  const existingForm = await prisma.form.findUnique({
     where: {
       id: formId,
-      userId: user.id,
     },
   });
 
-  if (!form) {
-    throw new Error("Form not found or unauthorized access");
+  if (!existingForm) {
+    throw new Error("Form not found");
   }
 
+  // Check if there are any related records (e.g., submissions) before deleting the form
+  const submissions = await prisma.formSubmissions.findMany({
+    where: {
+      formId: formId,
+    },
+  });
+
+  // Delete related records first
+  await Promise.all(
+    submissions.map(async (submission) => {
+      await prisma.formSubmissions.delete({
+        where: {
+          id: submission.id,
+        },
+      });
+    })
+  );
+
+  // Now delete the form
   await prisma.form.delete({
     where: {
       id: formId,

@@ -66,7 +66,7 @@ function PublishFormBtn({ id }: { id: number }) {
               startTransition(publishForm);
             }}
           >
-            Proceed {loading && <FaSpinner className="animate-spin" />}
+            Proceed {loading && <FaSpinner className="animate-spin ml-2" />}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
