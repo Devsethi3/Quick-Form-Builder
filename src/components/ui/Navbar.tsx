@@ -14,9 +14,9 @@ const Navbar = () => {
 
     return (
         <>
-            <header className="border-b">
-                <div className="container">
-                    <div className="flex h-12 items-center justify-between">
+            <header className="border-b sticky top-0 z-10">
+                <div className="px-8 py-2 dark:bg-[#030712]  bg-[#fcfdff] backdrop-blur-md">
+                    <div className="flex items-center justify-between container">
                         <Link href="/" className="flex items-center gap-3">
                             <Image src="/logo.svg" width={45} height={45} alt="logo" />
                             <h1 className="text-3xl font-bold">QuickForm</h1>
