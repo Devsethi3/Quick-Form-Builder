@@ -22,7 +22,9 @@ const Navbar = () => {
                     <div className="flex items-center justify-between container">
                         <Link href="/" className="flex items-center gap-3">
                             <Image src="/logo.svg" width={45} height={45} alt="logo" />
-                            {user && <h1 className="text-2xl lg:text-3xl font-bold">QuickForm</h1>}
+                            {user && (
+                                <h1 className="text-2xl lg:text-3xl font-bold">QuickForm</h1>
+                            )}
                         </Link>
 
                         <div className={`nav-menu ${isOpen ? "show-menu" : "nav-menu"} flex items-center gap-52`}>
