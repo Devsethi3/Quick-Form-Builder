@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+*::selection {
+  background: #884dee;
+  color: #fff;
+}
+
 .container {
   max-width: 1500px;
   margin: 1rem auto;
