@@ -6,9 +6,12 @@ import { useRouter } from "next/navigation"
 import { UserButton, useUser } from "@clerk/nextjs"
 import Image from "next/image"
 import { HiMenu } from "react-icons/hi"
+import { IoMdClose } from "react-icons/io"
+import { useState } from "react"
 
 const Navbar = () => {
 
+    const [isOpen, setIsOpen] = useState(false);
     const router = useRouter();
     const { user } = useUser();
 
@@ -19,27 +22,27 @@ const Navbar = () => {
                     <div className="flex items-center justify-between container">
                         <Link href="/" className="flex items-center gap-3">
                             <Image src="/logo.svg" width={45} height={45} alt="logo" />
-                            <h1 className="text-3xl font-bold md:block hidden">QuickForm</h1>
+                            {user && <h1 className="text-2xl lg:text-3xl font-bold">QuickForm</h1>}
                         </Link>
 
-                        <div className="hidden md:block">
+                        <div className={`nav-menu ${isOpen ? "show-menu" : "nav-menu"} flex items-center gap-52`}>
                             <nav aria-label="Global">
-                                <ul className="flex items-center gap-12">
+                                <ul className="flex nav-list items-center gap-12">
+                                    <IoMdClose onClick={() => setIsOpen(!isOpen)} className="nav-close block md:hidden text-white w-10 h-10 cursor-pointer p-2 hover:bg-[#9f68ff] rounded-full" />
                                     <li>
-                                        <Link href="/" className="text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white">Home</Link>
+                                        <Link href="/">Home</Link>
                                     </li>
                                     <li>
-                                        <Link href="/dashboard" className="text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white">Dashboard</Link>
+                                        <Link href="/dashboard">Dashboard</Link>
                                     </li>
                                     <li>
-                                        <Link href="/" className="text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white">Pricing</Link>
+                                        <Link href="/">Pricing</Link>
                                     </li>
                                 </ul>
                             </nav>
-                        </div>
-
-                        <div className="flex items-center gap-4">
                             <ThemeSwitcher />
+                        </div>
+                        <div className="flex items-center gap-4">
                             {user ? (
                                 <UserButton />
                             ) : (
@@ -50,7 +53,7 @@ const Navbar = () => {
                             )}
 
                             <div className="block md:hidden">
-                                <Button variant="secondary" className="px-2">
+                                <Button onClick={() => setIsOpen(!isOpen)} variant="secondary" className="px-2">
                                     <HiMenu className="text-xl" />
                                 </Button>
                             </div>

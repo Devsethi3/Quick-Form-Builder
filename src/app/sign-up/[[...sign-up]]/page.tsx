@@ -15,18 +15,18 @@ const SignUpPage = () => {
                     </aside>
 
                     <main
-                        className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6"
+                        className="flex flex-col items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6"
                     >
                         <div className="max-w-xl lg:max-w-3xl">
                             <h1 className="mb-2 text-center text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
                                 Welcome to QuickForm
                             </h1>
 
-                            <p className="mb-4 text-sm text-center leading-relaxed text-gray-500">
-                                Join QuickForm today and streamline your form-building <br /> experience. It&apos;s quick, it&apos;s easy, and best of all, it&apos;s free! 🎉
+                            <p className="mb-4 text-sm mx-4 text-center leading-relaxed text-gray-500">
+                                Join QuickForm today and streamline your form-building experience. It&apos;s quick, it&apos;s easy, and best of all, it&apos;s free! 🎉
                             </p>
-                            <SignUp />
                         </div>
+                        <SignUp />
                     </main>
                 </div>
             </section>

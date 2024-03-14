@@ -69,7 +69,7 @@ const FormCard = ({ form }: { form: Form }) => {
         <Card className="min-h-[200px]">
             <CardHeader>
                 <CardTitle className="flex items-center gap-2 justify-between relative">
-                    <h2 className="font-bold text-[1.4rem]">{form.name}</h2>
+                    <h2 className="font-semibold leading-6 text-[1.2rem] lg:text-[1.4rem]">{form.name}</h2>
                     {form.published && <Badge>Published</Badge>}
                     {!form.published && <Badge variant={"destructive"}>Draft</Badge>}
                     <AlertDialog>

@@ -15,23 +15,25 @@ const ThemeSwitcher = () => {
 
     if (!mounted) return null;
     return (
-        <Tabs defaultValue={theme}>
-            <TabsList className="border">
-                <TabsTrigger value="light" onClick={() => setTheme("light")}>
-                    <SunIcon className="h-[1.2rem] w-[1.2rem]" />
-                </TabsTrigger>
-            </TabsList>
-            <TabsList className="border">
-                <TabsTrigger value="dark" onClick={() => setTheme("dark")}>
-                    <MoonIcon className="h-[1.2rem] w-[1.2rem] rotate-0 transition-all dark:rotate-0" />
-                </TabsTrigger>
-            </TabsList>
-            <TabsList className="border">
-                <TabsTrigger value="system" onClick={() => setTheme("system")}>
-                    <Monitor className="h-[1.2rem] w-[1.2rem]" />
-                </TabsTrigger>
-            </TabsList>
-        </Tabs>
+        <div className="theme-toggler">
+            <Tabs defaultValue={theme}>
+                <TabsList className="border">
+                    <TabsTrigger value="light" onClick={() => setTheme("light")}>
+                        <SunIcon className="h-[1.2rem] w-[1.2rem]" />
+                    </TabsTrigger>
+                </TabsList>
+                <TabsList className="border">
+                    <TabsTrigger value="dark" onClick={() => setTheme("dark")}>
+                        <MoonIcon className="h-[1.2rem] w-[1.2rem] rotate-0 transition-all dark:rotate-0" />
+                    </TabsTrigger>
+                </TabsList>
+                <TabsList className="border">
+                    <TabsTrigger value="system" onClick={() => setTheme("system")}>
+                        <Monitor className="h-[1.2rem] w-[1.2rem]" />
+                    </TabsTrigger>
+                </TabsList>
+            </Tabs>
+        </div>
     )
 }
 

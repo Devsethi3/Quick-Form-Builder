@@ -23,7 +23,7 @@ const SignInPage = () => {
                             </h1>
 
                             <p className="mb-4 text-sm text-center leading-relaxed text-gray-500">
-                                Log in to QuickForm and pick up where you left off. With QuickForm, <br /> managing your forms has never been complex.
+                                Log in to QuickForm and pick up where you left off. With QuickForm, managing your forms has never been complex.
                             </p>
                         </div>
                         <SignIn />
