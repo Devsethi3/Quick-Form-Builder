@@ -9,7 +9,7 @@ const NotFoundPage = () => {
             <img src="https://assets.codepen.io/1538474/meteor.svg" className="meteor" />
             <p className="title">Oh no!!</p>
             <p className="subtitle">
-                You're either misspelling the URL <br /> or requesting a page that's no longer here.
+                You&apos;re either misspelling the URL <br /> or requesting a page that&apos;s no longer here.
             </p>
             <div className='text-center'>
                 <Link href="/" className='text-xl py-3 px-8 bg-[#884DEE] hover:bg-[#673ab5] rounded-md text-white'>Back to Home</Link>
