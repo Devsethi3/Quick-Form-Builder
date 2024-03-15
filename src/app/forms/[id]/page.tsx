@@ -87,7 +87,7 @@ async function FormDetailPage({
                 />
             </div>
 
-            <div className="container pt-5">
+            <div className="container py-5">
                 <SubmissionsTable id={form.id} />
             </div>
         </>
@@ -148,32 +148,37 @@ async function SubmissionsTable({ id }: { id: number }) {
         <>
             <h1 className="text-2xl font-bold my-4">Submissions</h1>
             <div className="rounded-md border">
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            {columns.map((column) => (
-                                <TableHead key={column.id} className="uppercase">
-                                    {column.label}
-                                </TableHead>
-                            ))}
-                            <TableHead className="text-muted-foreground text-right uppercase">Submitted at</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {rows.map((row, index) => (
-                            <TableRow key={index}>
+                {rows.length > 0 ? (
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
                                 {columns.map((column) => (
-                                    <RowCell key={column.id} type={column.type} value={row[column.id]} />
+                                    <TableHead key={column.id} className="uppercase">
+                                        {column.label}
+                                    </TableHead>
                                 ))}
-                                <TableCell className="text-muted-foreground text-right">
-                                    {formatDistance(row.submittedAt, new Date(), {
-                                        addSuffix: true,
-                                    })}
-                                </TableCell>
+                                <TableHead className="text-muted-foreground text-right uppercase">Submitted at</TableHead>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+                        </TableHeader>
+                        <TableBody>
+                            {rows.map((row, index) => (
+                                <TableRow key={index}>
+                                    {columns.map((column) => (
+                                        <RowCell key={column.id} type={column.type} value={row[column.id]} />
+                                    ))}
+                                    <TableCell className="text-muted-foreground text-right">
+                                        {formatDistance(row.submittedAt, new Date(), {
+                                            addSuffix: true,
+                                        })}
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>) : (
+                    <>
+                        <p className="text-muted-foreground text-base lg:text-xl py-5 text-center">There are no submission in this form</p>
+                    </>
+                )}
             </div>
         </>
     );

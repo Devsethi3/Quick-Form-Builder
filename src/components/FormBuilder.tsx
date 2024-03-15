@@ -16,7 +16,6 @@ import Link from "next/link";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import Confetti from "react-confetti";
 import useDesigner from "@/hooks/useDesigner";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { PiDotsThreeOutlineVerticalFill } from "react-icons/pi";
 
 function FormBuilder({ form }: { form: Form }) {
@@ -24,6 +23,7 @@ function FormBuilder({ form }: { form: Form }) {
   const [isReady, setIsReady] = useState(false);
 
   const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
     const handleResize = () => {
@@ -80,12 +80,12 @@ function FormBuilder({ form }: { form: Form }) {
     return (
       <>
         <Confetti width={window.innerWidth} height={window.innerHeight} recycle={false} numberOfPieces={1000} />
-        <div className="flex flex-col items-center justify-center h-[90vh] w-full">
+        <div className="flex flex-col items-center justify-center h-[80vh] lg:h-[90vh] container w-full">
           <div className="">
-            <h1 className="text-center text-4xl font-bold text-black dark:text-white border-b pb-2 mb-8">
-              🎊🎊 Form Published 🎊🎊
+            <h1 className="text-center text-3xl lg:text-4xl font-bold text-black dark:text-white border-b pb-2 mb-8">
+              🎊 Form Published 🎊
             </h1>
-            <h2 className="text-2xl">Share this form</h2>
+            <h2 className="text-xl lg:text-2xl font-medium">Share this form</h2>
             <h3 className="text-xl text-muted-foreground border-b pb-10">
               Anyone with the link can view and submit the form
             </h3>
@@ -137,22 +137,20 @@ function FormBuilder({ form }: { form: Form }) {
             {!form.published && (
               <>
                 {isSmallScreen ?
-                  (<DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button size="icon" variant="ghost" className="rounded-full">
+                  (
+                    <div className="relative">
+                      <Button onClick={() => setIsOpen(!isOpen)} size="icon" variant="ghost" className="rounded-full">
                         <PiDotsThreeOutlineVerticalFill className="w-4 h-4" />
                         <span className="sr-only">Actions</span>
                       </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem className="cursor-pointer">
+                      {isOpen && <div className="absolute z-[1] bg-[#fff] rounded-md border p-4 min-h-30 top-[2.9rem] shadow-md right-0">
                         <div className="flex flex-col gap-3">
                           <SaveFormBtn id={form.id} />
                           <PublishFormBtn id={form.id} />
                         </div>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>) : (
+                      </div>}
+                    </div>
+                  ) : (
                     <>
                       <SaveFormBtn id={form.id} />
                       <PublishFormBtn id={form.id} />
@@ -160,6 +158,10 @@ function FormBuilder({ form }: { form: Form }) {
                   )}
               </>
             )}
+            {/* <div className="flex flex-col gap-3">
+                          <SaveFormBtn id={form.id} />
+                          <PublishFormBtn id={form.id} />
+                        </div> */}
           </div>
         </nav>
         <div className="flex w-full flex-grow items-center justify-center relative overflow-y-auto h-[200px] bg-accent bg-[url(/paper.svg)] dark:bg-[url(/paper-dark.svg)]">
