@@ -16,10 +16,31 @@ import Link from "next/link";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import Confetti from "react-confetti";
 import useDesigner from "@/hooks/useDesigner";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import { PiDotsThreeOutlineVerticalFill } from "react-icons/pi";
 
 function FormBuilder({ form }: { form: Form }) {
   const { setElements, setSelectedElement } = useDesigner();
   const [isReady, setIsReady] = useState(false);
+
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth <= 768); // Adjust the max width as per your requirement
+    };
+
+    // Initial check on mount
+    handleResize();
+
+    // Event listener for window resize
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup on unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
@@ -106,7 +127,7 @@ function FormBuilder({ form }: { form: Form }) {
   return (
     <DndContext sensors={sensors}>
       <main className="flex h-screen flex-col w-full">
-        <nav className="flex justify-between border-b-2 py-4 px-9 gap-3 items-center">
+        <nav className="flex justify-between border-b-2 lg:py-4 lg:px-9 py-2 px-4 gap-3 items-center">
           <h2 className="truncate font-medium">
             <span className="text-muted-foreground mr-2">Form:</span>
             {form.name}
@@ -115,8 +136,28 @@ function FormBuilder({ form }: { form: Form }) {
             <PreviewDialogBtn />
             {!form.published && (
               <>
-                <SaveFormBtn id={form.id} />
-                <PublishFormBtn id={form.id} />
+                {isSmallScreen ?
+                  (<DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button size="icon" variant="ghost" className="rounded-full">
+                        <PiDotsThreeOutlineVerticalFill className="w-4 h-4" />
+                        <span className="sr-only">Actions</span>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem className="cursor-pointer">
+                        <div className="flex flex-col gap-3">
+                          <SaveFormBtn id={form.id} />
+                          <PublishFormBtn id={form.id} />
+                        </div>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>) : (
+                    <>
+                      <SaveFormBtn id={form.id} />
+                      <PublishFormBtn id={form.id} />
+                    </>
+                  )}
               </>
             )}
           </div>

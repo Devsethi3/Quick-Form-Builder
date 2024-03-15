@@ -186,6 +186,14 @@ html {
     right: 5%;
     top: 3%;
   }
+  .designer-sidebar{
+    position: absolute;
+    top: 0;
+    right: -60%;
+    width: 200px;
+    /* opacity: 0; */
+    /* pointer-events: none; */
+  }
 }
 @media screen and (max-width: 450px){
   .nav-list{

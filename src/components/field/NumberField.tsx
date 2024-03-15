@@ -175,7 +175,7 @@ function PropertiesComponent({ elementInstance }: { elementInstance: FormElement
                   }}
                 />
               </FormControl>
-              <FormDescription>
+              <FormDescription className="text-xs lg:text-sm">
                 The label of the field. <br /> It will be displayed above the field
               </FormDescription>
               <FormMessage />
@@ -196,7 +196,7 @@ function PropertiesComponent({ elementInstance }: { elementInstance: FormElement
                   }}
                 />
               </FormControl>
-              <FormDescription>The placeholder of the field.</FormDescription>
+              <FormDescription className="text-xs lg:text-sm">The placeholder of the field.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -215,7 +215,7 @@ function PropertiesComponent({ elementInstance }: { elementInstance: FormElement
                   }}
                 />
               </FormControl>
-              <FormDescription>
+              <FormDescription className="text-xs lg:text-sm">
                 The helper text of the field. <br />
                 It will be displayed below the field.
               </FormDescription>
@@ -230,9 +230,8 @@ function PropertiesComponent({ elementInstance }: { elementInstance: FormElement
             <FormItem className="flex items-center justify-between rounded-lg border p-3 shadow-sm">
               <div className="space-y-0.5">
                 <FormLabel>Required</FormLabel>
-                <FormDescription>
-                  The helper text of the field. <br />
-                  It will be displayed below the field.
+                <FormDescription className="text-xs lg:text-sm">
+                  It will set the field to be required field.
                 </FormDescription>
               </div>
               <FormControl>
