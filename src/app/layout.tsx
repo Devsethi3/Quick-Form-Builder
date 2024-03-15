@@ -21,6 +21,9 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
+        <head>
+          <link rel="shortcut icon" href="/logo.svg" type="image/x-icon" />
+        </head>
         <body className={poppins.className}>
           <NextTopLoader color="#884DEE" crawlSpeed={200}
             height={4}

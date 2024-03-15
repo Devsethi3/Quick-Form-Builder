@@ -17,7 +17,7 @@ function VisitBtn({ shareUrl }: { shareUrl: string }) {
   const shareLink = `${window.location.origin}/submit/${shareUrl}`;
   return (
     <Button
-      className="w-[200px]"
+      className="w-full lg:w-[200px]"
       onClick={() => {
         window.open(shareLink, "_blank");
       }}

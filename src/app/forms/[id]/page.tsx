@@ -39,8 +39,8 @@ async function FormDetailPage({
     return (
         <>
             <div className="py-2 border-b border-muted">
-                <div className="flex justify-between container">
-                    <h1 className="text-3xl font-bold truncate">{form.name}</h1>
+                <div className="flex flex-col md:flex-row justify-center gap-5 lg:gap-0 lg:justify-between container">
+                    <h1 className="text-3xl text-center lg:text-start font-bold truncate">{form.name}</h1>
                     <VisitBtn shareUrl={form.shareURL} />
                 </div>
             </div>
@@ -49,7 +49,7 @@ async function FormDetailPage({
                     <ShareForm shareUrl={form.shareURL} />
                 </div>
             </div>
-            <div className="w-full pt-8 gap-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 container">
+            <div className="w-full py-5 gap-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 container">
                 <StatsCard
                     title="Total visits"
                     icon={<LuView className="text-blue-600" />}
@@ -87,7 +87,7 @@ async function FormDetailPage({
                 />
             </div>
 
-            <div className="container pt-10">
+            <div className="container pt-5">
                 <SubmissionsTable id={form.id} />
             </div>
         </>
