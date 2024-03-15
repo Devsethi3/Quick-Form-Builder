@@ -1,10 +1,10 @@
-# Quick Form App
+# Quick Form Builder
 
 Welcome to the Quick Form App repository! This project is a Next.js-based web application designed to facilitate easy form creation and management. With features like drag-and-drop form building, theme toggling, and a personalized dashboard, users can create custom forms, submit data, and manage submissions efficiently. The app integrates Prisma and PostgreSQL for data storage and Clerk for secure authentication.
 
 ## Demo
 
-Check out the live demo of the Quick Form App [here](https://your-demo-link.com).
+Check out the live demo of the Quick Form App [here](https://quick-form-one.vercel.app).
 
 ## Preview
 
@@ -41,13 +41,13 @@ To run the Quick Form App locally, follow these steps:
 1. Clone the repository to your local machine:
 
    ```bash
-   git clone https://github.com/Devsethi3/quick-form-app.git
+   git clone https://github.com/Devsethi3/Quick-Form-Builder.git
    ```
 
 2. Navigate to the project directory:
 
    ```bash
-   cd quick-form-app
+   cd quick-form-builder
    ```
 
 3. Install dependencies:
@@ -82,11 +82,5 @@ Contributions are welcome! If you'd like to contribute to this project, please f
 3. Make your changes and commit them with descriptive messages.
 4. Push your changes to your fork.
 5. Open a pull request to merge your changes into the main branch.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
 
 Thank you for checking out the Quick Form App repository. Start building custom forms with ease and efficiency today!
