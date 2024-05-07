@@ -30,7 +30,7 @@ function Designer() {
 
             const droppingSidebarBtnOverDesignerDropArea = isDesignerBtnElement && isDroppingOverDesignerDropArea;
 
-            // scenerio 
+            
             if (droppingSidebarBtnOverDesignerDropArea) {
                 const type = active.data?.current?.type;
                 const newElement = FormElements[type as ElementsType].construct(idGenerator());
