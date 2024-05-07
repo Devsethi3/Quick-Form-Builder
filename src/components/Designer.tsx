@@ -69,7 +69,7 @@ function Designer() {
                 return;
             }
 
-            // Third scenario
+            // Third
             const isDraggingDesignerElement = active.data?.current?.isDesignerElement;
 
             const draggingDesignerElementOverAnotherDesignerElement =
