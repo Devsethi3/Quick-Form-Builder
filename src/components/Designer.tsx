@@ -48,7 +48,7 @@ function Designer() {
 
             const droppingSidebarBtnOverDesignerElement = isDesignerBtnElement && isDroppingOverDesignerElement;
 
-            // Second scenario
+            // Second
             if (droppingSidebarBtnOverDesignerElement) {
                 const type = active.data?.current?.type;
                 const newElement = FormElements[type as ElementsType].construct(idGenerator());
