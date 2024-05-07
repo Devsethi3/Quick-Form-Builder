@@ -30,6 +30,7 @@ function Designer() {
 
             const droppingSidebarBtnOverDesignerDropArea = isDesignerBtnElement && isDroppingOverDesignerDropArea;
 
+            // First
             
             if (droppingSidebarBtnOverDesignerDropArea) {
                 const type = active.data?.current?.type;
