@@ -46,7 +46,12 @@ const Navbar = () => {
                         </div>
                         <div className="flex items-center gap-4">
                             {user ? (
-                                <UserButton />
+                                <UserButton appearance={{
+                                    elements: {
+                                      userButtonAvatarBox: "w-8 h-8",
+                                      userButtonPopoverFooter: "hidden"
+                                    }
+                                  }} afterSignOutUrl="/" />
                             ) : (
                                 <>
                                     <Button onClick={() => router.push("/sign-in")}>Login</Button>
