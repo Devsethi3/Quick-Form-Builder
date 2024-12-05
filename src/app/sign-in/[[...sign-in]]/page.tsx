@@ -19,7 +19,7 @@ const SignInPage = () => {
                     >
                         <div className="max-w-xl lg:max-w-3xl">
                             <h1 className="mb-2 text-center text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
-                                Welcome Back Chief👋
+                                Welcome Back!
                             </h1>
 
                             <p className="mb-4 text-sm text-center leading-relaxed text-gray-500">
