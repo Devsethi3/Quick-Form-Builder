@@ -3,6 +3,46 @@
 import prisma from "@/lib/prisma";
 import { formSchema, formSchemaType } from "@/schemas/form";
 import { currentUser } from "@clerk/nextjs";
+import { PageConfig } from "@/context/DesignerContext";
+import { z } from "zod";
+import { Form, Prisma } from "@prisma/client";
+
+export type FullForm = {
+  id: number;
+  userId: string;
+  createdAt: Date;
+  published: boolean;
+  name: string;
+  description: string | null;
+  content: string;
+  visits: number;
+  submissions: number;
+  shareURL: string;
+  theme: string;
+  isMultiPage: boolean;
+  pages: Page[];
+};
+
+export type Page = {
+  elements: string;
+  config: string;
+  order: number;
+};
+
+const pageSchema = z.object({
+  elements: z.string(),
+  config: z.string(),
+  order: z.number(),
+});
+
+const updateFormSchema = z.object({
+  id: z.number(),
+  content: z.string(),
+  isMultiPage: z.boolean(),
+  pages: z.array(pageSchema),
+});
+
+export type UpdateFormInput = z.infer<typeof updateFormSchema>;
 
 class UserNotFoundErr extends Error {}
 
@@ -52,13 +92,38 @@ export async function CreateForm(data: formSchemaType) {
     throw new UserNotFoundErr();
   }
 
-  const { name, description } = data;
+  const { name, description, theme } = data;
+
+  // Check for existing forms with the same name
+  const existingForms = await prisma.form.findMany({
+    where: {
+      userId: user.id,
+      name: {
+        startsWith: name,
+      },
+    },
+    select: {
+      name: true,
+    },
+  });
+
+  // If there are existing forms with the same name, append a number
+  let newName = name;
+  if (existingForms.length > 0) {
+    const existingNames = new Set(existingForms.map(f => f.name));
+    let counter = 1;
+    while (existingNames.has(newName)) {
+      newName = `${name} (${counter})`;
+      counter++;
+    }
+  }
 
   const form = await prisma.form.create({
     data: {
       userId: user.id,
-      name,
+      name: newName,
       description,
+      theme: theme || "default",
     },
   });
 
@@ -68,42 +133,33 @@ export async function CreateForm(data: formSchemaType) {
 
   return form.id;
 }
+
 export async function DeleteForm(formId: number) {
   const user = await currentUser();
   if (!user) {
     throw new UserNotFoundErr();
   }
 
-  // Check if the form exists before attempting to delete it
-  const existingForm = await prisma.form.findUnique({
+  // Check if the form exists and belongs to the user
+  const existingForm = await prisma.form.findFirst({
     where: {
       id: formId,
+      userId: user.id,
     },
   });
 
   if (!existingForm) {
-    throw new Error("Form not found");
+    throw new Error("Form not found or you don't have permission to delete it");
   }
 
-  // Check if there are any related records (e.g., submissions) before deleting the form
-  const submissions = await prisma.formSubmissions.findMany({
+  // Delete related submissions first
+  await prisma.formSubmissions.deleteMany({
     where: {
       formId: formId,
     },
   });
 
-  // Delete related records first
-  await Promise.all(
-    submissions.map(async (submission) => {
-      await prisma.formSubmissions.delete({
-        where: {
-          id: submission.id,
-        },
-      });
-    })
-  );
-
-  // Now delete the form
+  // Delete the form
   await prisma.form.delete({
     where: {
       id: formId,
@@ -129,35 +185,64 @@ export async function GetForms() {
   });
 }
 
-export async function GetFormById(id: number) {
-  const user = await currentUser();
-  if (!user) {
-    throw new UserNotFoundErr();
-  }
-
-  return await prisma.form.findUnique({
-    where: {
-      userId: user.id,
-      id,
-    },
+export async function GetFormById(id: number): Promise<FullForm | null> {
+  const form = await prisma.form.findUnique({
+    where: { id },
+    include: {
+      pages: {
+        orderBy: {
+          order: 'asc'
+        }
+      }
+    }
   });
+
+  if (!form) return null;
+
+  return form;
 }
 
-export async function UpdateFormContent(id: number, jsonContent: string) {
+export async function UpdateFormContent(input: UpdateFormInput) {
+  console.log('Received form data:', input); // Debug log
+  
+  const validation = updateFormSchema.safeParse(input);
+  if (!validation.success) {
+    console.error('Validation error:', validation.error); // Debug log
+    throw new Error('Invalid form data');
+  }
+
   const user = await currentUser();
   if (!user) {
     throw new UserNotFoundErr();
   }
 
-  return await prisma.form.update({
-    where: {
-      userId: user.id,
-      id,
-    },
-    data: {
-      content: jsonContent,
-    },
-  });
+  const { id, content, isMultiPage, pages } = input;
+
+  try {
+    const form = await prisma.form.update({
+      where: {
+        id,
+        userId: user.id,
+      },
+      data: {
+        content,
+        isMultiPage,
+        pages: {
+          deleteMany: {},
+          create: pages,
+        },
+      },
+      include: {
+        pages: true
+      }
+    });
+
+    console.log('Updated form:', form); // Debug log
+    return form;
+  } catch (error) {
+    console.error('Database error:', error); // Debug log
+    throw error;
+  }
 }
 
 export async function PublishForm(id: number) {
@@ -166,31 +251,75 @@ export async function PublishForm(id: number) {
     throw new UserNotFoundErr();
   }
 
+  // First check if the form exists and belongs to the user
+  const form = await prisma.form.findFirst({
+    where: {
+      id,
+      userId: user.id,
+    },
+  });
+
+  if (!form) {
+    throw new Error("Form not found");
+  }
+
   return await prisma.form.update({
+    where: {
+      id,
+    },
     data: {
       published: true,
-    },
-    where: {
-      userId: user.id,
-      id,
     },
   });
 }
 
 export async function GetFormContentByUrl(formUrl: string) {
-  return await prisma.form.update({
+  const form = await prisma.form.findUnique({
     select: {
       content: true,
-    },
-    data: {
-      visits: {
-        increment: 1,
+      theme: true,
+      isMultiPage: true,
+      pages: {
+        select: {
+          elements: true,
+          config: true,
+          order: true,
+        },
+        orderBy: {
+          order: 'asc',
+        },
       },
     },
     where: {
       shareURL: formUrl,
     },
   });
+
+  if (!form) return null;
+
+  // For multi-page forms, combine all elements from pages
+  if (form.isMultiPage && form.pages) {
+    const allElements = form.pages.reduce((acc, page) => {
+      const pageElements = JSON.parse(page.elements);
+      return [...acc, ...pageElements];
+    }, [] as any[]);
+
+    return {
+      theme: form.theme,
+      content: JSON.stringify(allElements),
+    };
+  }
+
+  // Update visit count
+  await prisma.form.update({
+    where: { shareURL: formUrl },
+    data: { visits: { increment: 1 } },
+  });
+
+  return {
+    theme: form.theme,
+    content: form.content,
+  };
 }
 
 export async function SubmitForm(formUrl: string, content: string) {

@@ -1,11 +1,13 @@
 "use client";
 
-import { Form } from "@prisma/client";
-import React, { useEffect, useState } from "react";
+import { type Form } from '@prisma/client';
+import React, { useEffect, useCallback, useState } from "react";
 import PreviewDialogBtn from "./PreviewDialogBtn";
 import PublishFormBtn from "./PublishFormBtn";
+import GenerateCodeBtn from "./GenerateCodeBtn";
 import SaveFormBtn from "./SaveFormBtn";
 import Designer from "./Designer";
+import { ThemeSelector } from "./ThemeSelector"; 
 import { DndContext, MouseSensor, TouchSensor, useSensor, useSensors } from "@dnd-kit/core";
 import DragOverlayWrapper from "./DragOverlayWrapper";
 import { ImSpinner2 } from "react-icons/im";
@@ -17,21 +19,37 @@ import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import Confetti from "react-confetti";
 import useDesigner from "@/hooks/useDesigner";
 import { PiDotsThreeOutlineVerticalFill } from "react-icons/pi";
+import { formThemes } from "@/schemas/form";
+import { ElementsType, FormElement, FormElementInstance, FormElements } from "./FormElements";
+import { GetFormById, type FullForm } from "@/action/form";
+import { PageConfig } from "@/context/DesignerContext";
 
-function FormBuilder({ form }: { form: Form }) {
-  const { setElements, setSelectedElement } = useDesigner();
+function FormBuilder({ id }: { id: number }) {
+  const [loadedForm, setLoadedForm] = useState<FullForm | null>(null);
   const [isReady, setIsReady] = useState(false);
-
-  const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [isOpen, setIsOpen] = useState(false)
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const { 
+    setElements, 
+    setSelectedElement, 
+    setTheme,
+    setIsMultiPage,
+    setPages,
+    setCurrentPage,
+    isMultiPage,
+    pages,
+    currentPage,
+    elements 
+  } = useDesigner();
 
   useEffect(() => {
+    setIsSmallScreen(window.innerWidth <= 768);
     const handleResize = () => {
       setIsSmallScreen(window.innerWidth <= 768); // Adjust the max width as per your requirement
     };
 
     // Initial check on mount
-    handleResize();
+    // handleResize();
 
     // Event listener for window resize
     window.addEventListener('resize', handleResize);
@@ -58,13 +76,70 @@ function FormBuilder({ form }: { form: Form }) {
   const sensors = useSensors(mouseSensor, touchSensor);
 
   useEffect(() => {
-    if (isReady) return;
-    const elements = JSON.parse(form.content);
-    setElements(elements);
-    setSelectedElement(null);
-    const readyTimeout = setTimeout(() => setIsReady(true), 500);
-    return () => clearTimeout(readyTimeout);
-  }, [form, setElements, isReady, setSelectedElement]);
+    const fetchFormData = async () => {
+      const form = await GetFormById(id);
+      if (!form) return;
+
+      setLoadedForm(form);
+      setIsMultiPage(form.isMultiPage);
+      
+      if (form.isMultiPage && form.pages?.length > 0) {
+        const sortedPages = form.pages
+          .sort((a, b) => a.order - b.order)
+          .map(page => ({
+            elements: JSON.parse(page.elements) as FormElementInstance[],
+            config: JSON.parse(page.config) as PageConfig['config']
+          }));
+        
+        setPages(sortedPages);
+        setCurrentPage(0);
+      } else {
+        const elements = JSON.parse(form.content) as FormElementInstance[];
+        setTheme((form.theme || "default") as keyof typeof formThemes);
+        
+        const reconstructedElements = elements.map(element => {
+          const elementType = element.type as ElementsType;
+          
+          if (elementType === 'TwoColumnLayoutField') {
+            const typedElement = element as FormElementInstance & {
+              extraAttributes: {
+                leftColumn: FormElementInstance[];
+                rightColumn: FormElementInstance[];
+                gap: string;
+              }
+            };
+            
+            return {
+              ...FormElements[elementType].construct(element.id),
+              extraAttributes: {
+                ...typedElement.extraAttributes,
+                leftColumn: typedElement.extraAttributes.leftColumn.map(colElement => 
+                  reconstructElement(colElement)
+                ),
+                rightColumn: typedElement.extraAttributes.rightColumn.map(colElement => 
+                  reconstructElement(colElement)
+                )
+              }
+            };
+          }
+          return reconstructElement(element);
+        });
+
+        setElements(reconstructedElements);
+      }
+      setIsReady(true);
+    };
+
+    fetchFormData();
+  }, [id, setElements, setSelectedElement, setTheme, setIsMultiPage, setPages, setCurrentPage]);
+
+  const reconstructElement = (element: FormElementInstance) => {
+    const elementType = element.type as ElementsType;
+    return {
+      ...FormElements[elementType].construct(element.id),
+      extraAttributes: element.extraAttributes
+    };
+  };
 
   if (!isReady) {
     return (
@@ -74,9 +149,9 @@ function FormBuilder({ form }: { form: Form }) {
     );
   }
 
-  const shareUrl = `${window.location.origin}/submit/${form.shareURL}`;
+  const shareUrl = `${window.location.origin}/submit/${loadedForm?.shareURL}`;
 
-  if (form.published) {
+  if (loadedForm?.published) {
     return (
       <>
         <Confetti width={window.innerWidth} height={window.innerHeight} recycle={false} numberOfPieces={1000} />
@@ -91,30 +166,31 @@ function FormBuilder({ form }: { form: Form }) {
             </h3>
             <div className="my-4 flex flex-col gap-2 items-center w-full border-b pb-4">
               <Input className="w-full" readOnly value={shareUrl} />
-              <Button
-                className="mt-2 w-full"
-                onClick={() => {
-                  navigator.clipboard.writeText(shareUrl);
-                  toast({
-                    title: "Copied!",
-                    description: "Link copied to clipboard",
-                  });
-                }}
-              >
-                Copy link
-              </Button>
+              <div className="flex gap-2 w-full">
+                <Button
+                  className="w-full"
+                  onClick={() => {
+                    navigator.clipboard.writeText(shareUrl);
+                    toast({
+                      title: "Copied!",
+                      description: "Link copied to clipboard",
+                    });
+                  }}
+                >
+                  Copy link
+                </Button>
+                <GenerateCodeBtn id={id} />
+              </div>
             </div>
-            <div className="flex justify-between">
-              <Button variant={"link"} asChild>
-                <Link href={"/"} className="gap-2">
-                  <BsArrowLeft />
-                  Go back home
+            <div className="flex justify-between items-center w-full mt-4">
+              <Button asChild variant="link">
+                <Link href="/dashboard" className="gap-2">
+                  <BsArrowLeft /> Back to dashboard
                 </Link>
               </Button>
-              <Button variant={"link"} className="opacity-70" asChild>
-                <Link href={`/forms/${form.id}`} className="gap-2">
-                  Form details
-                  <BsArrowRight />
+              <Button asChild variant="link">
+                <Link href={shareUrl} target="_blank" className="gap-2">
+                  View form <BsArrowRight />
                 </Link>
               </Button>
             </div>
@@ -130,11 +206,12 @@ function FormBuilder({ form }: { form: Form }) {
         <nav className="flex justify-between border-b-2 lg:py-4 lg:px-9 py-2 px-4 gap-3 items-center">
           <h2 className="truncate font-medium">
             <span className="text-muted-foreground mr-2">Form:</span>
-            {form.name}
+            {loadedForm?.name}
           </h2>
           <div className="flex items-center gap-2">
+            <ThemeSelector />
             <PreviewDialogBtn />
-            {!form.published && (
+            {!loadedForm?.published && (
               <>
                 {isSmallScreen ?
                   (
@@ -145,27 +222,29 @@ function FormBuilder({ form }: { form: Form }) {
                       </Button>
                       {isOpen && <div className="absolute z-[1] bg-[#fff] rounded-md border p-4 min-h-30 top-[2.9rem] shadow-md right-0">
                         <div className="flex flex-col gap-3">
-                          <SaveFormBtn id={form.id} />
-                          <PublishFormBtn id={form.id} />
+                          <SaveFormBtn id={id} />
+                          <PublishFormBtn id={id} />
+                          <GenerateCodeBtn id={id} />
                         </div>
                       </div>}
                     </div>
                   ) : (
                     <>
-                      <SaveFormBtn id={form.id} />
-                      <PublishFormBtn id={form.id} />
+                      <SaveFormBtn id={id} />
+                      <PublishFormBtn id={id} />
+                      <GenerateCodeBtn id={id} />
                     </>
                   )}
               </>
             )}
-            {/* <div className="flex flex-col gap-3">
-                          <SaveFormBtn id={form.id} />
-                          <PublishFormBtn id={form.id} />
-                        </div> */}
           </div>
         </nav>
         <div className="flex w-full flex-grow items-center justify-center relative overflow-y-auto h-[200px] bg-accent bg-[url(/paper.svg)] dark:bg-[url(/paper-dark.svg)]">
-          <Designer />
+          {isMultiPage ? (
+            <Designer elements={pages[currentPage]?.elements || []} />
+          ) : (
+            <Designer elements={elements} />
+          )}
         </div>
       </main>
       <DragOverlayWrapper />
