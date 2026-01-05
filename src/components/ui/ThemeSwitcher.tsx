@@ -1,40 +1,28 @@
 "use client";
 
-import { Monitor, MoonIcon, SunIcon } from "lucide-react";
-import { useTheme } from "next-themes"
-import { useEffect, useState } from "react";
-import { Tabs, TabsList, TabsTrigger } from "./tabs";
+import { MoonIcon, SunIcon } from "lucide-react";
+import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
 
-const ThemeSwitcher = () => {
-    const { theme, setTheme } = useTheme();
-    const [mounted, setMounted] = useState(false)
+export function ThemeSwitcher() {
+  const { resolvedTheme, setTheme } = useTheme();
 
-    useEffect(() => {
-        setMounted(true)
-    }, [])
+  const toggleTheme = () => {
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+  };
 
-    if (!mounted) return null;
-    return (
-        <div className="theme-toggler">
-            <Tabs defaultValue={theme} className="flex">
-                <TabsList className="border">
-                    <TabsTrigger value="light" onClick={() => setTheme("light")}>
-                        <SunIcon className="h-[1rem] w-[1rem]" />
-                    </TabsTrigger>
-                </TabsList>
-                <TabsList className="border">
-                    <TabsTrigger value="dark" onClick={() => setTheme("dark")}>
-                        <MoonIcon className="h-[1rem] w-[1rem] rotate-0 transition-all dark:rotate-0" />
-                    </TabsTrigger>
-                </TabsList>
-                <TabsList className="border">
-                    <TabsTrigger value="system" onClick={() => setTheme("system")}>
-                        <Monitor className="h-[1rem] w-[1rem]" />
-                    </TabsTrigger>
-                </TabsList>
-            </Tabs>
-        </div>
-    )
+  return (
+    <Button
+      onClick={toggleTheme}
+      variant="outline"
+      size="icon"
+      aria-label="Toggle theme"
+    >
+      {resolvedTheme === "dark" ? (
+        <SunIcon className="h-4 w-4" />
+      ) : (
+        <MoonIcon className="h-4 w-4" />
+      )}
+    </Button>
+  );
 }
-
-export default ThemeSwitcher

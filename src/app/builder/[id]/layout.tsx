@@ -1,11 +1,11 @@
-import Navbar from '@/components/ui/Navbar'
+import Navbar from '@/components/Navbar'
 import React, { ReactNode } from 'react'
 
 const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <div>
       <Navbar />
-      <main>{children}</main>
+      <main className='my-[75px]'>{children}</main>
     </div>
   )
 }

@@ -67,7 +67,7 @@ function FormSubmitComponent({ formUrl, content }: { content: FormElementInstanc
     return (
       <div className="flex justify-center w-full h-full items-center p-2 lg:p-8">
         <div className="max-w-[620px] flex flex-col gap-4 flex-grow bg-background w-full p-8 overflow-y-auto border shadow-md dark:shadow-white/20 rounded-md">
-          <h1 className="text-2xl font-bold">Form submitted Successfully!🎉</h1>
+          <h1 className="text-2xl font-medium bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-transparent dark:from-foreground dark:to-foreground/40">Form submitted Successfully!🎉</h1>
           <p className="text-muted-foreground">Thank you for submitting the form, you can close this page now.</p>
         </div>
       </div>

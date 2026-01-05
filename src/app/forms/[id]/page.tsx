@@ -1,203 +1,76 @@
-import VisitBtn from "@/components/VisitBtn";
-import React, { ReactNode } from "react";
-import { LuView } from "react-icons/lu";
-import { FaWpforms } from "react-icons/fa";
-import { HiCursorClick } from "react-icons/hi";
-import { TbArrowBounce } from "react-icons/tb";
-import { ElementsType, FormElementInstance } from "@/components/FormElements";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { format, formatDistance } from "date-fns";
-import { Badge } from "@/components/ui/badge";
-import { Checkbox } from "@/components/ui/checkbox";
-import { GetFormById, GetFormWithSubmissions } from "@/action/form";
-import { StatsCard } from "@/app/(routes)/dashboard/page";
-import ShareForm from "@/components/ShareForm";
+import { Suspense } from "react";
+import { notFound } from "next/navigation";
+import { GetFormById } from "@/action/form";
+import FormHeader from "../../../components/forms/FormHeader";
+import ShareSection from "../../../components/forms/ShareSection";
+import { StatsCards, StatsCardsSkeleton } from "../../../components/forms/StatsCards";
+import SubmissionsTable, { SubmissionsTableSkeleton } from "../../../components/forms/SubmissionsTable";
 
-async function FormDetailPage({
-    params,
-}: {
-    params: {
-        id: string;
-    };
-}) {
-    const { id } = params;
-    const form = await GetFormById(Number(id));
-    if (!form) {
-        throw new Error("form not found");
-    }
 
-    const { visits, submissions } = form;
-
-    let submissionRate = 0;
-
-    if (visits > 0) {
-        submissionRate = (submissions / visits) * 100;
-    }
-
-    const bounceRate = 100 - submissionRate;
-
-    return (
-        <>
-            <div className="py-2 border-b border-muted">
-                <div className="flex flex-col md:flex-row justify-center gap-5 lg:gap-0 lg:justify-between container">
-                    <h1 className="text-3xl text-center lg:text-start font-bold truncate">{form.name}</h1>
-                    <VisitBtn shareUrl={form.shareURL} />
-                </div>
-            </div>
-            <div className="py-4 border-b border-muted">
-                <div className="container flex gap-2 items-center justify-between">
-                    <ShareForm shareUrl={form.shareURL} />
-                </div>
-            </div>
-            <div className="w-full py-5 gap-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 container">
-                <StatsCard
-                    title="Total visits"
-                    icon={<LuView className="text-blue-600" />}
-                    helperText="All time form visits"
-                    value={visits.toLocaleString() || ""}
-                    loading={false}
-                    className="shadow-md shadow-blue-600"
-                />
-
-                <StatsCard
-                    title="Total submissions"
-                    icon={<FaWpforms className="text-yellow-600" />}
-                    helperText="All time form submissions"
-                    value={submissions.toLocaleString() || ""}
-                    loading={false}
-                    className="shadow-md shadow-yellow-600"
-                />
-
-                <StatsCard
-                    title="Submission rate"
-                    icon={<HiCursorClick className="text-green-600" />}
-                    helperText="Visits that result in form submission"
-                    value={submissionRate.toLocaleString() + "%" || ""}
-                    loading={false}
-                    className="shadow-md shadow-green-600"
-                />
-
-                <StatsCard
-                    title="Bounce rate"
-                    icon={<TbArrowBounce className="text-red-600" />}
-                    helperText="Visits that leaves without interacting"
-                    value={bounceRate.toLocaleString() + "%" || ""}
-                    loading={false}
-                    className="shadow-md shadow-red-600"
-                />
-            </div>
-
-            <div className="container py-5">
-                <SubmissionsTable id={form.id} />
-            </div>
-        </>
-    );
+interface FormDetailPageProps {
+  params: {
+    id: string;
+  };
 }
 
-export default FormDetailPage;
+export default async function FormDetailPage({ params }: FormDetailPageProps) {
+  const { id } = params;
+  const form = await GetFormById(Number(id));
 
-type Row = { [key: string]: string } & {
-    submittedAt: Date;
-};
+  if (!form) {
+    notFound();
+  }
 
-async function SubmissionsTable({ id }: { id: number }) {
-    const form = await GetFormWithSubmissions(id);
+  const { visits, submissions } = form;
+  const submissionRate = visits > 0 ? (submissions / visits) * 100 : 0;
+  const bounceRate = 100 - submissionRate;
 
-    if (!form) {
-        throw new Error("form not found");
-    }
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Background decoration */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 -left-40 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+      </div>
 
-    const formElements = JSON.parse(form.content) as FormElementInstance[];
-    const columns: {
-        id: string;
-        label: string;
-        required: boolean;
-        type: ElementsType;
-    }[] = [];
+      <div className="relative z-10">
+        {/* Header */}
+        <FormHeader
+          name={form.name}
+          published={form.published}
+          createdAt={form.createdAt}
+          visits={form.visits}
+          shareUrl={form.shareURL}
+        />
 
-    formElements.forEach((element) => {
-        switch (element.type) {
-            case "TextField":
-            case "NumberField":
-            case "TextAreaField":
-            case "DateField":
-            case "SelectField":
-            case "CheckboxField":
-                columns.push({
-                    id: element.id,
-                    label: element.extraAttributes?.label,
-                    required: element.extraAttributes?.required,
-                    type: element.type,
-                });
-                break;
-            default:
-                break;
-        }
-    });
+        {/* Content */}
+        <div className="container px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
+          {/* Share Section */}
+          <ShareSection shareUrl={form.shareURL} formName={form.name} />
 
-    const rows: Row[] = [];
-    form.FormSubmissions.forEach((submission) => {
-        const content = JSON.parse(submission.content);
-        rows.push({
-            ...content,
-            submittedAt: submission.createdAt,
-        });
-    });
+          {/* Stats Cards */}
+          <section>
+            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
+              Analytics
+            </h2>
+            <Suspense fallback={<StatsCardsSkeleton />}>
+              <StatsCards
+                visits={visits}
+                submissions={submissions}
+                submissionRate={submissionRate}
+                bounceRate={bounceRate}
+              />
+            </Suspense>
+          </section>
 
-    return (
-        <>
-            <h1 className="text-2xl font-bold my-4">Submissions</h1>
-            <div className="rounded-md border">
-                {rows.length > 0 ? (
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                {columns.map((column) => (
-                                    <TableHead key={column.id} className="uppercase">
-                                        {column.label}
-                                    </TableHead>
-                                ))}
-                                <TableHead className="text-muted-foreground text-right uppercase">Submitted at</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {rows.map((row, index) => (
-                                <TableRow key={index}>
-                                    {columns.map((column) => (
-                                        <RowCell key={column.id} type={column.type} value={row[column.id]} />
-                                    ))}
-                                    <TableCell className="text-muted-foreground text-right">
-                                        {formatDistance(row.submittedAt, new Date(), {
-                                            addSuffix: true,
-                                        })}
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>) : (
-                    <>
-                        <p className="text-muted-foreground text-base lg:text-xl py-5 text-center">There are no submission in this form</p>
-                    </>
-                )}
-            </div>
-        </>
-    );
-}
-
-function RowCell({ type, value }: { type: ElementsType; value: string }) {
-    let node: ReactNode = value;
-
-    switch (type) {
-        case "DateField":
-            if (!value) break;
-            const date = new Date(value);
-            node = <Badge variant={"outline"}>{format(date, "dd/MM/yyyy")}</Badge>;
-            break;
-        case "CheckboxField":
-            const checked = value === "true";
-            node = <Checkbox checked={checked} disabled />;
-            break;
-    }
-
-    return <TableCell>{node}</TableCell>;
+          {/* Submissions Table */}
+          <section>
+            <Suspense fallback={<SubmissionsTableSkeleton />}>
+              <SubmissionsTable id={form.id} />
+            </Suspense>
+          </section>
+        </div>
+      </div>
+    </div>
+  );
 }
