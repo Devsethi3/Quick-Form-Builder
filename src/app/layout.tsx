@@ -14,17 +14,21 @@ import DesignerContextProvider from "@/context/DesignerContext";
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://quick-form-one.vercel.app"),
+
   title: {
     default: "QuickForm — Drag & Drop Form Builder for Modern Web Apps",
     template: "%s | QuickForm",
   },
+
   description:
-    "QuickForm is a modern drag-and-drop form builder that lets you create, customize, and publish responsive forms in minutes — no code required.",
+    "QuickForm is a modern drag-and-drop form builder to create, customize, and publish responsive forms in minutes. No code required.",
 
   keywords: [
     "drag and drop form builder",
     "online form builder",
     "no code form builder",
+    "form builder for developers",
     "custom forms",
     "QuickForm",
   ],
@@ -32,17 +36,27 @@ export const metadata: Metadata = {
   authors: [
     {
       name: "Dev Prasad Sethi",
-      url: "https://twitter.com/iamsethidev",
+      url: "https://twitter.com/imsethidev",
     },
   ],
 
   creator: "Dev Prasad Sethi",
+  publisher: "QuickForm",
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
 
   openGraph: {
     title: "QuickForm — Drag & Drop Form Builder",
     description:
-      "Build powerful, responsive forms faster using an intuitive drag-and-drop form builder. No code required.",
-    url: "https://quickform.app", 
+      "Build powerful, responsive forms faster with an intuitive drag-and-drop form builder. No code required.",
+    url: "https://quick-form-one.vercel.app",
     siteName: "QuickForm",
     images: [
       {
@@ -61,8 +75,8 @@ export const metadata: Metadata = {
     title: "QuickForm — Drag & Drop Form Builder",
     description:
       "Create and publish forms in minutes with a modern drag-and-drop form builder. Clean UI, fast setup, no code.",
-    creator: "@iamsethidev",
-    images: ["/og-image.png"],
+    creator: "@imsethidev",
+    images: ["/og-image.png"], 
   },
 };
 

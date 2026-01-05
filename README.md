@@ -6,9 +6,7 @@ Quick Form Builder is a **modern open-source drag-and-drop form builder** built 
 Create, customize, and publish forms in minutes — **no code required**.  
 Perfect for developers, startups, and teams who want a fast, flexible alternative to traditional form tools.
 
-![Quick Form Builder Landing Page](og-image.png)
-
----
+![Quick Form Builder Landing Page](/public/og-image.png)
 
 ## 🔥 Why Quick Form Builder?
 
@@ -32,13 +30,13 @@ https://quick-form-one.vercel.app
 ## 🖼️ Screenshots
 
 ### Dashboard (Light Theme)
-![Dashboard Light](dashboard-light.png)
+![Dashboard Light](/public/dashboard_light.png)
 
 ### Create Form
 ![Create Form](preview_create_form.png)
 
 ### Form Submissions
-![Form Submissions](form-light.png)
+![Form Submissions](/public/form-light.png)
 
 ---
 
