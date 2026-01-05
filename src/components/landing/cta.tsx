@@ -58,17 +58,18 @@ export default function CTASection() {
               className="mb-6 inline-flex items-center justify-center rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-medium text-primary backdrop-blur-sm"
             >
               <Sparkles className="mr-2 h-3 w-3" />
-              Limited time offer
+              Build forms faster
             </motion.div>
 
             <h2 className="text-balance text-3xl font-bold tracking-tighter text-foreground sm:text-4xl md:text-5xl">
-              Ready to <span className="text-primary">revolutionize</span> your
-              workflow?
+              Build powerful forms{" "}
+              <span className="text-primary">without writing code</span>
             </h2>
 
-            <p className="mx-auto mt-6 max-w-xl text-balance text-lg text-muted-foreground">
-              Join thousands of forward-thinking teams who have switched to
-              Revo. Experience the speed of thought.
+            <p className="mx-auto mt-6 max-w-xl text-balance text-base lg:text-lg text-muted-foreground">
+              Design, customize, and publish forms in minutes using a simple
+              drag-and-drop builder. Collect responses instantly and stay in
+              control.
             </p>
 
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -77,24 +78,18 @@ export default function CTASection() {
                 size="lg"
                 className="group h-12 min-w-40 px-8 text-base"
               >
-                <Link href="/workspace">
-                  Get Started
+                <Link href="/dashboard">
+                  Create your first form
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="h-12 min-w-40 border-border bg-background px-8 text-base hover:bg-muted/50"
-              >
-                <Link href="/">Contact</Link>
               </Button>
             </div>
 
             <div className="flex items-center justify-center gap-3 pt-6">
               <BadgeCheckIcon className="size-4 text-primary" />
-              <span className="text-sm">No credit card required</span>
+              <span className="text-sm">
+                Free to start
+              </span>
             </div>
           </div>
         </motion.div>

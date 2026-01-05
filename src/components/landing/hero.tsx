@@ -7,10 +7,12 @@ import {
   BadgeCheck,
   BadgeCheckIcon,
   CheckIcon,
+  Github,
   PlayCircle,
 } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
+import { DashboardPreview } from "../DashboardPreview";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 10 },
@@ -193,11 +195,17 @@ export default function HeroSection() {
                 size="lg"
                 className="relative z-10 w-full group"
               >
-                <Link href="#demo">
+                <Link
+                  href="https://github.com/Devsethi3/Quick-Form-Builder"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <motion.div variants={subtleFadeUp}>
-                    <PlayCircle className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
+                    <Github className="mr-2 h-5 w-5" />
                   </motion.div>
-                  <motion.span variants={subtleFadeUp}>Watch demo</motion.span>
+                  <motion.span variants={subtleFadeUp}>
+                    View on GitHub
+                  </motion.span>
                 </Link>
               </Button>
             </motion.div>
@@ -226,55 +234,13 @@ export default function HeroSection() {
             </motion.div>
           </motion.div>
 
-          {/* Video section */}
+          {/* Dashboard Preview */}
           <motion.div
             id="demo"
             variants={fadeUp}
-            className="relative mx-auto mt-12 w-full max-w-5xl z-10"
+            className="relative mx-auto mt-12 w-full max-w-6xl z-10"
           >
-            {/* Glow effect behind video */}
-            <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20 rounded-3xl blur-2xl opacity-30" />
-
-            {/* Video frame with clean styling */}
-            <motion.div className="relative rounded-2xl border border-border bg-card/60 p-1 backdrop-blur-sm shadow-2xl">
-              <motion.div
-                className="rounded-xl border border-border bg-card overflow-hidden"
-                variants={subtleFadeUp}
-              >
-                {/* Browser chrome */}
-                <div className="flex items-center gap-2 px-4 py-3 border-b border-border bg-muted/30">
-                  <div className="flex gap-1.5">
-                    <div className="w-3 h-3 rounded-full bg-red-400/80" />
-                    <div className="w-3 h-3 rounded-full bg-yellow-400/80" />
-                    <div className="w-3 h-3 rounded-full bg-green-400/80" />
-                  </div>
-                  <div className="flex-1 mx-4">
-                    <div className="max-w-md mx-auto bg-background/50 rounded-md px-3 py-1.5 text-xs text-muted-foreground border border-border/50">
-                      quick-form
-                    </div>
-                  </div>
-                </div>
-
-                {/* Video placeholder */}
-                <motion.div
-                  className="relative aspect-video bg-gradient-to-br from-muted/50 to-muted flex items-center justify-center"
-                  variants={subtleFadeUp}
-                >
-                  <div className="flex flex-col items-center gap-4">
-                    <motion.div
-                      className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center cursor-pointer hover:bg-primary/20 transition-colors"
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <PlayCircle className="w-10 h-10 text-primary" />
-                    </motion.div>
-                    <p className="text-sm text-muted-foreground">
-                      Watch the demo
-                    </p>
-                  </div>
-                </motion.div>
-              </motion.div>
-            </motion.div>
+            <DashboardPreview />
           </motion.div>
         </motion.div>
       </div>

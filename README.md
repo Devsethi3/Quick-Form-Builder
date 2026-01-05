@@ -1,86 +1,184 @@
-# Quick Form Builder
 
-Welcome to the Quick Form App repository! This project is a Next.js-based web application designed to facilitate easy form creation and management. With features like drag-and-drop form building, theme toggling, and a personalized dashboard, users can create custom forms, submit data, and manage submissions efficiently. The app integrates Prisma and PostgreSQL for data storage and Clerk for secure authentication.
+# Quick Form Builder – Open Source Drag & Drop Form Builder
 
-## Demo
+Quick Form Builder is a **modern open-source drag-and-drop form builder** built with **Next.js, TypeScript, Prisma, and PostgreSQL**.
 
-Check out the live demo of the Quick Form App [here](https://quick-form-one.vercel.app).
+Create, customize, and publish forms in minutes — **no code required**.  
+Perfect for developers, startups, and teams who want a fast, flexible alternative to traditional form tools.
 
-## Preview
+![Quick Form Builder Landing Page](og-image.png)
 
-### 1. User Dashboard
+---
 
-![User Dashboard](preview_dashboard.png)
+## 🔥 Why Quick Form Builder?
 
-### 2. Create Form
+- ⚡ Build forms faster with drag & drop
+- 🎨 Light & dark theme support
+- 🔐 Secure authentication (Clerk)
+- 📊 Dashboard to manage forms & submissions
+- 🗃️ PostgreSQL + Prisma ORM
+- 🧩 Modern, responsive UI
+- 🌍 Open source & developer-friendly
 
+---
+
+## 🌐 Live Demo
+
+👉 **Try it live:**  
+https://quick-form-one.vercel.app
+
+---
+
+## 🖼️ Screenshots
+
+### Dashboard (Light Theme)
+![Dashboard Light](dashboard-light.png)
+
+### Create Form
 ![Create Form](preview_create_form.png)
 
-### 3. Submit Form
+### Form Submissions
+![Form Submissions](form-light.png)
 
-![Submit Form](preview_submit_form.png)
+---
 
-### 4. Form Submissions
+## 🧠 Features
 
-![Form Submissions](preview_submission_cards.png)
+### 🧱 Drag & Drop Form Builder
+- Add text inputs, selects, checkboxes, and more
+- Reorder fields visually
+- Configure labels, placeholders, and required states
 
-## Features
+### 🎨 Theme Toggle
+- Built-in light & dark mode
+- Smooth theme switching
 
-- **Form Builder:** Easily create custom forms with a drag-and-drop interface.
-- **Theme Toggle:** Toggle between light and dark themes for personalized viewing.
-- **Authentication:** Secure authentication powered by Clerk.
-- **Personal Dashboard:** Manage forms and submissions in a personalized dashboard.
-- **Submission Management:** View form submissions in a modern card format.
-- **Prisma and PostgreSQL Integration:** Utilize Prisma and PostgreSQL for secure data storage.
-- **Modern UI Design:** Enjoy a sleek and intuitive user interface.
+### 👤 Authentication
+- Secure login/signup using Clerk
+- User-specific dashboards
 
-## Getting Started
+### 📊 Dashboard
+- Manage all forms in one place
+- Track submissions per form
 
-To run the Quick Form App locally, follow these steps:
+### 📥 Submission Management
+- View responses in a clean, readable format
+- Designed for clarity and speed
 
-1. Clone the repository to your local machine:
+### 🗄️ Database & Backend
+- Prisma ORM for type safety
+- PostgreSQL for reliability and scale
 
-   ```bash
-   git clone https://github.com/Devsethi3/Quick-Form-Builder.git
-   ```
+---
 
-2. Navigate to the project directory:
+## 🛠️ Tech Stack
 
-   ```bash
-   cd quick-form-builder
-   ```
+- **Framework:** Next.js (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Animations:** Framer Motion
+- **Icons:** Lucide
+- **Auth:** Clerk
+- **Database:** PostgreSQL
+- **ORM:** Prisma
+- **Deployment:** Vercel
 
-3. Install dependencies:
+---
 
-   ```bash
-   npm install
-   ```
+## 🚀 Getting Started (Local Development)
 
-4. Set up Prisma and PostgreSQL according to your environment.
+### 1️⃣ Clone the repository
+```bash
+git clone https://github.com/Devsethi3/Quick-Form-Builder.git
+cd Quick-Form-Builder
+````
 
-5. Start the development server:
+### 2️⃣ Install dependencies
 
-   ```bash
-   npm run dev
-   ```
+```bash
+npm install
+```
 
-6. Open your web browser and visit [http://localhost:3000](http://localhost:3000) to use the app.
+### 3️⃣ Setup environment variables
 
-## Usage
+Create a `.env` file:
 
-1. Login or register using the provided authentication system.
-2. Create custom forms using the drag-and-drop form builder.
-3. Submit data using the created forms.
-4. Manage form submissions and view them in the dashboard.
+```env
+DATABASE_URL="postgresql://user:password@localhost:5432/quickform"
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_key
+CLERK_SECRET_KEY=your_clerk_secret
+```
 
-## Contributing
+### 4️⃣ Setup Prisma
 
-Contributions are welcome! If you'd like to contribute to this project, please follow these steps:
+```bash
+npx prisma generate
+npx prisma migrate dev
+```
 
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Make your changes and commit them with descriptive messages.
-4. Push your changes to your fork.
-5. Open a pull request to merge your changes into the main branch.
+### 5️⃣ Start the dev server
 
-Thank you for checking out the Quick Form App repository. Start building custom forms with ease and efficiency today!
+```bash
+npm run dev
+```
+
+Open 👉 [http://localhost:3000](http://localhost:3000)
+
+---
+
+## 📜 Scripts
+
+```bash
+npm run dev      # Start development server
+npm run build    # Production build
+npm run start    # Start production server
+npm run lint     # Lint codebase
+```
+
+---
+
+## 🧩 Roadmap
+
+* [ ] More field types
+* [ ] Advanced validation rules
+* [ ] Shareable public form links
+* [ ] Export submissions (CSV)
+* [ ] Webhooks & integrations
+* [ ] Team collaboration
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions of all kinds!
+
+Please read **CONTRIBUTING.md** before submitting a pull request.
+
+---
+
+## 📜 License
+
+MIT License © 2026
+Free to use, modify, and distribute.
+
+---
+
+## ⭐ Support the Project
+
+If this project helped you:
+
+* ⭐ Star the repo
+* 🐛 Report bugs
+* 💡 Suggest features
+* 🔁 Share it with others
+
+---
+
+## 👋 Author
+
+Built by **Dev Sethi**
+
+* GitHub: [https://github.com/Devsethi3](https://github.com/Devsethi3)
+* Twitter/X: [https://twitter.com/devsethi3](https://twitter.com/devsethi3)
+
+Happy building 🚀

@@ -1,147 +1,97 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "./ui/button";
-import { useRouter } from "next/navigation";
-import { UserButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
+import { useState, memo } from "react";
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "./ui/button";
 import { ThemeSwitcher } from "./ui/ThemeSwitcher";
+import { NavbarAuthActions } from "./NavbarAuthActions";
 
-const Navbar = () => {
+interface NavLink {
+  name: string;
+  href: string;
+}
+
+const NAV_LINKS: readonly NavLink[] = [
+  { name: "Home", href: "/" },
+  { name: "Dashboard", href: "/dashboard" },
+];
+
+const Navbar = memo(() => {
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
-  const { user, isLoaded } = useUser();
-
-  if (!isLoaded) return null;
-
-  const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "Dashboard", href: "/dashboard" },
-  ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b bg-background backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container py-2 mx-auto">
-        <div className="flex lg:h-14 h-12 items-center justify-between">
-          {/* Logo Section */}
-          <Link
-            href="/"
-            className="flex items-center gap-2 transition-opacity hover:opacity-80"
-          >
-            <Image
-              src="/logo.svg"
-              width={32}
-              height={32}
-              alt="logo"
-              className="w-8 h-8"
-            />
-            <h1 className="text-xl font-medium tracking-tight">QuickForm</h1>
+    <header className="fixed inset-x-0 top-0 z-50 border-b bg-background/60 backdrop-blur">
+      <div className="container mx-auto px-4">
+        <div className="flex h-16 items-center justify-between">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2">
+            <Image src="/logo.svg" alt="logo" width={32} height={32} priority />
+            <span className="text-lg font-semibold">QuickForm</span>
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
+            {NAV_LINKS.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                className="text-sm text-muted-foreground hover:text-primary transition"
               >
                 {link.name}
               </Link>
             ))}
           </nav>
 
-          {/* Actions Section */}
-          <div className="flex items-center gap-4">
+          {/* Actions */}
+          <div className="flex items-center gap-3">
             <div className="hidden md:block">
               <ThemeSwitcher />
             </div>
 
-            {user ? (
-              <UserButton
-                appearance={{
-                  elements: {
-                    userButtonAvatarBox: "w-9 h-9",
-                  },
-                }}
-                afterSignOutUrl="/"
-              />
-            ) : (
-              <div className="hidden md:flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  onClick={() => router.push("/sign-in")}
-                >
-                  Log in
-                </Button>
-                <Button onClick={() => router.push("/sign-up")}>Sign up</Button>
-              </div>
-            )}
+            <NavbarAuthActions />
 
-            {/* Mobile Menu Toggle */}
             <Button
               variant="outline"
               size="icon"
-              className="md:hidden text-muted-foreground"
-              onClick={() => setIsOpen(!isOpen)}
+              className="md:hidden"
+              onClick={() => setIsOpen((v) => !v)}
             >
-              {isOpen ? (
-                <X className="h-5 w-5" />
-              ) : (
-                <Menu className="h-5 w-5" />
-              )}
+              {isOpen ? <X size={18} /> : <Menu size={18} />}
             </Button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden border-b bg-background backdrop-blur supports-[backdrop-filter]:bg-background/60"
-          >
-            <div className="container py-4 space-y-4 flex flex-col px-4">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className="text-sm font-medium py-2 hover:text-primary transition-colors"
-                >
-                  {link.name}
-                </Link>
-              ))}
-              <div className="flex items-center justify-between py-2 border-t pt-4">
-                <span className="text-sm text-muted-foreground">Theme</span>
-                <ThemeSwitcher />
-              </div>
-              {!user && (
-                <div className="grid grid-cols-2 gap-2 pt-2">
-                  <Button
-                    variant="outline"
-                    onClick={() => router.push("/sign-in")}
-                  >
-                    Log in
-                  </Button>
-                  <Button onClick={() => router.push("/sign-up")}>
-                    Sign up
-                  </Button>
-                </div>
-              )}
+      {/* Mobile Menu - Simple fade transition */}
+      {isOpen && (
+        <div className="md:hidden border-t bg-background animate-in fade-in duration-150">
+          <div className="flex flex-col gap-4 px-4 py-4">
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                onClick={() => setIsOpen(false)}
+                className="text-sm font-medium"
+              >
+                {link.name}
+              </Link>
+            ))}
+
+            <div className="flex items-center justify-between pt-4 border-t">
+              <span className="text-sm text-muted-foreground">Theme</span>
+              <ThemeSwitcher />
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
+            <NavbarAuthActions mobile />
+          </div>
+        </div>
+      )}
     </header>
   );
-};
+});
+
+Navbar.displayName = "Navbar";
 
 export default Navbar;
-

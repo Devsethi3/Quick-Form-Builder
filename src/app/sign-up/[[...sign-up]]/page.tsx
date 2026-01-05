@@ -303,7 +303,7 @@ const SignUpPage = () => {
                 className="lg:hidden mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-border"
               >
                 <p className="text-center text-xs text-muted-foreground mb-4">
-                  Trusted by thousands of job seekers
+                  Trusted by many of users
                 </p>
                 <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm text-muted-foreground">
                   <div className="flex items-center gap-1.5 sm:gap-2">
