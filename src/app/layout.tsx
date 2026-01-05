@@ -17,12 +17,12 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://quick-form-one.vercel.app"),
 
   title: {
-    default: "QuickForm — Drag & Drop Form Builder for Modern Web Apps",
+    default: "QuickForm | Drag & Drop Form Builder for Modern Web Apps",
     template: "%s | QuickForm",
   },
 
   description:
-    "QuickForm is a modern drag-and-drop form builder to create, customize, and publish responsive forms in minutes. No code required.",
+    "QuickForm is a drag-and-drop form builder to create, customize, and publish responsive forms in minutes. No code required.",
 
   keywords: [
     "drag and drop form builder",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
-    title: "QuickForm — Drag & Drop Form Builder",
+    title: "QuickForm | Drag & Drop Form Builder",
     description:
       "Build powerful, responsive forms faster with an intuitive drag-and-drop form builder. No code required.",
     url: "https://quick-form-one.vercel.app",
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "QuickForm — Drag & Drop Form Builder",
+        alt: "QuickForm | Drag & Drop Form Builder",
       },
     ],
     locale: "en_US",
@@ -72,7 +72,7 @@ export const metadata: Metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "QuickForm — Drag & Drop Form Builder",
+    title: "QuickForm | Drag & Drop Form Builder",
     description:
       "Create and publish forms in minutes with a modern drag-and-drop form builder. Clean UI, fast setup, no code.",
     creator: "@imsethidev",
