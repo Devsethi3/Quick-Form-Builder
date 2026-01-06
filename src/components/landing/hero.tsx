@@ -6,9 +6,7 @@ import {
   ArrowRight,
   BadgeCheck,
   BadgeCheckIcon,
-  CheckIcon,
   Github,
-  PlayCircle,
 } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";

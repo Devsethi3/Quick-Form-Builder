@@ -30,7 +30,7 @@ https://quick-form-one.vercel.app
 ## 🖼️ Screenshots
 
 ### Dashboard (Light Theme)
-![Dashboard Light](/public/dashboard_light.png)
+![Dashboard Light](/public/dashboard-light.png)
 
 ### Create Form
 ![Create Form](preview_create_form.png)
