@@ -17,7 +17,7 @@ export default function CTASection() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className={cn(
             "relative isolate overflow-hidden rounded-3xl border border-border bg-background px-6 py-16 text-center sm:px-16 md:py-24",
-            "after:absolute after:inset-0 after:-z-10 after:bg-background/80 after:backdrop-blur-sm"
+            "after:absolute after:inset-0 after:-z-10 after:bg-background/80 after:backdrop-blur-sm",
           )}
         >
           {/* --- Background Effects --- */}
@@ -61,9 +61,8 @@ export default function CTASection() {
               Build forms faster
             </motion.div>
 
-            <h2 className="text-balance text-3xl font-bold tracking-tighter text-foreground sm:text-4xl md:text-5xl">
-              Build powerful forms{" "}
-              <span className="text-primary">without writing code</span>
+            <h2 className="text-balance text-3xl font-medium tracking-tighter  sm:text-4xl md:text-5xl bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-transparent dark:from-foreground dark:to-foreground/40">
+              Build powerful forms without writing code
             </h2>
 
             <p className="mx-auto mt-6 max-w-xl text-balance text-base lg:text-lg text-muted-foreground">
@@ -87,9 +86,7 @@ export default function CTASection() {
 
             <div className="flex items-center justify-center gap-3 pt-6">
               <BadgeCheckIcon className="size-4 text-primary" />
-              <span className="text-sm">
-                Free to start
-              </span>
+              <span className="text-sm">Free to start</span>
             </div>
           </div>
         </motion.div>

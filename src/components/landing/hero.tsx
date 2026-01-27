@@ -176,7 +176,7 @@ export default function HeroSection() {
                 size="lg"
                 className="shadow-lg shadow-primary/20 relative z-10 group"
               >
-                <Link href="/auth">
+                <Link href="/dashboard">
                   <motion.span variants={subtleFadeUp}>
                     Create Custom Form
                   </motion.span>
